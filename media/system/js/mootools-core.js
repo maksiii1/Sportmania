@@ -6132,39 +6132,11 @@ if (location.href.indexOf("/administrator/") + 1) {
     };
   })();
 } else {
-  /* MooTools: the javascript framework. license: MIT-style license. copyright: Copyright (c) 2006-2016 [Valerio Proietti](http://mad4milk.net/).*/
-  /*!
-Web Build: http://mootools.net/core/builder/e426a9ae7167c5807b173d5deff673fc
-*/
-  /*
----
-
-name: Core
-
-description: The heart of MooTools.
-
-license: MIT-style license.
-
-copyright: Copyright (c) 2006-2015 [Valerio Proietti](http://mad4milk.net/).
-
-authors: The MooTools production team (http://mootools.net/developers/)
-
-inspiration:
-  - Class implementation inspired by [Base.js](http://dean.edwards.name/weblog/2006/03/base/) Copyright (c) 2006 Dean Edwards, [GNU Lesser General Public License](http://opensource.org/licenses/lgpl-license.php)
-  - Some functionality inspired by [Prototype.js](http://prototypejs.org) Copyright (c) 2005-2007 Sam Stephenson, [MIT License](http://opensource.org/licenses/mit-license.php)
-
-provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
-
-...
-*/
-  /*! MooTools: the javascript framework. license: MIT-style license. copyright: Copyright (c) 2006-2015 [Valerio Proietti](http://mad4milk.net/).*/
   (function () {
     this.MooTools = {
       version: "1.6.0",
       build: "529422872adfff401b901b8b6c7ca5114ee95e2b",
     };
-
-    // typeOf, instanceOf
 
     var typeOf = (this.typeOf = function (item) {
       if (item == null) return "null";
@@ -6214,14 +6186,10 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
       if (enumerables)
         for (var i = enumerables.length; i--; ) {
           var k = enumerables[i];
-          // signature has key-value, so overloadSetter can directly pass the
-          // method function, without swapping arguments.
+
           if (hasOwnProperty.call(object, k)) fn.call(bind, k, object[k]);
         }
     }
-    /*</ltIE8>*/
-
-    // Function overloading
 
     var Function = this.Function;
 
@@ -6231,9 +6199,7 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
         if (a == null) return this;
         if (usePlural || typeof a != "string") {
           for (var k in a) self.call(this, k, a[k]);
-          /*<ltIE8>*/
           forEachObjectEnumberableKey(a, self, this);
-          /*</ltIE8>*/
         } else {
           self.call(this, a, b);
         }
@@ -6267,8 +6233,6 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
       this.prototype[key] = value;
     }.overloadSetter();
 
-    // From
-
     var slice = Array.prototype.slice;
 
     Array.convert = function (item) {
@@ -6301,8 +6265,6 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
     Number.from = Number.convert;
     String.from = String.convert;
 
-    // hide, protect
-
     Function.implement({
       hide: function () {
         this.$hidden = true;
@@ -6314,8 +6276,6 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
         return this;
       },
     });
-
-    // Type
 
     var Type = (this.Type = function (name, object) {
       if (name) {
@@ -6401,8 +6361,6 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
     });
 
     new Type("Type", Type);
-
-    // Default Types
 
     var force = function (name, object, methods) {
       var isType = object != Object,
@@ -6504,19 +6462,13 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
 
     new Type("Boolean", Boolean);
 
-    // fixes NaN returning as Number
-
     Number.prototype.$family = function () {
       return isFinite(this) ? "number" : "null";
     }.hide();
 
-    // Number.random
-
     Number.extend("random", function (min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     });
-
-    // forEach, each, keys
 
     Array.implement({
       /*<!ES5>*/
@@ -6555,8 +6507,6 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
     });
 
     Object.each = Object.forEach;
-
-    // Array & Object cloning, Object merging and appending
 
     var cloneOf = function (item) {
       switch (typeOf(item)) {
@@ -6617,15 +6567,11 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
       },
     });
 
-    // Object-less types
-
     ["Object", "WhiteSpace", "TextNode", "Collection", "Arguments"].each(
       function (name) {
         new Type(name);
       }
     );
-
-    // Unique ID
 
     var UID = Date.now();
 
@@ -6634,24 +6580,7 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
     });
   })();
 
-  /*
----
-
-name: Array
-
-description: Contains Array Prototypes like each, contains, and erase.
-
-license: MIT-style license.
-
-requires: [Type]
-
-provides: Array
-
-...
-*/
-
   Array.implement({
-    /*<!ES5>*/
     every: function (fn, bind) {
       for (var i = 0, l = this.length >>> 0; i < l; i++) {
         if (i in this && !fn.call(bind, this[i], i, this)) return false;
@@ -6816,22 +6745,6 @@ provides: Array
     },
   });
 
-  /*
----
-
-name: Function
-
-description: Contains Function Prototypes like create, bind, pass, and delay.
-
-license: MIT-style license.
-
-requires: Type
-
-provides: Function
-
-...
-*/
-
   Function.extend({
     attempt: function () {
       for (var i = 0, l = arguments.length; i < l; i++) {
@@ -6897,22 +6810,6 @@ provides: Function
     },
   });
 
-  /*
----
-
-name: Number
-
-description: Contains Number Prototypes like limit, round, times, and ceil.
-
-license: MIT-style license.
-
-requires: Type
-
-provides: Number
-
-...
-*/
-
   Number.implement({
     limit: function (min, max) {
       return Math.min(max, Math.max(min, this));
@@ -6973,30 +6870,12 @@ provides: Number
     "tan",
   ]);
 
-  /*
----
-
-name: String
-
-description: Contains String Prototypes like camelCase, capitalize, test, and toInt.
-
-license: MIT-style license.
-
-requires: [Type, Array]
-
-provides: String
-
-...
-*/
-
   String.implement({
-    //<!ES6>
     contains: function (string, index) {
       return (
         (index ? String(this).slice(index) : String(this)).indexOf(string) > -1
       );
     },
-    //</!ES6>
 
     test: function (regex, params) {
       return (
@@ -7063,22 +6942,6 @@ provides: String
     },
   });
 
-  /*
----
-
-name: Browser
-
-description: The Browser Object. Contains Browser initialization, Window and Document, and the Browser Hash.
-
-license: MIT-style license.
-
-requires: [Array, Function, Number, String]
-
-provides: [Browser, Window, Document]
-
-...
-*/
-
   (function () {
     var document = this.document;
     var window = (document.window = this);
@@ -7087,8 +6950,6 @@ provides: [Browser, Window, Document]
       ua = ua.toLowerCase();
       platform = platform ? platform.toLowerCase() : "";
 
-      // chrome is included in the edge UA, so need to check for edge first,
-      // before checking if it's chrome.
       var UA = ua.match(/(edge)[\s\/:]([\w\d\.]+)/);
       if (!UA) {
         UA = ua.match(
@@ -7136,8 +6997,6 @@ provides: [Browser, Window, Document]
       parseUA: parse,
     });
 
-    // Request
-
     Browser.Request = (function () {
       var XMLHTTP = function () {
         return new XMLHttpRequest();
@@ -7169,8 +7028,6 @@ provides: [Browser, Window, Document]
 
     Browser.Features.xhr = !!Browser.Request;
 
-    // String scripts
-
     Browser.exec = function (text) {
       if (!text) return text;
       if (window.execScript) {
@@ -7198,8 +7055,6 @@ provides: [Browser, Window, Document]
       else if (typeOf(exec) == "function") exec(scripts, text);
       return text;
     });
-
-    // Window, Document
 
     Browser.extend({
       Document: this.Document,
@@ -7246,7 +7101,6 @@ provides: [Browser, Window, Document]
       this.attachEvent("onunload", unloadEvent);
     }
 
-    // IE fails on collections and <select>.options (refers to <select>)
     var arrayFrom = Array.convert;
     try {
       arrayFrom(document.html.childNodes);
@@ -7285,24 +7139,7 @@ provides: [Browser, Window, Document]
         };
       });
     }
-    /*</ltIE9>*/
   })();
-
-  /*
----
-
-name: Class
-
-description: Contains the Class Function for easily creating, extending, and implementing reusable Classes.
-
-license: MIT-style license.
-
-requires: [Array, String, Function, Number]
-
-provides: Class
-
-...
-*/
 
   (function () {
     var Class = (this.Class = new Type("Class", function (params) {
@@ -7415,22 +7252,6 @@ provides: Class
     };
   })();
 
-  /*
----
-
-name: Class.Extras
-
-description: Contains Utility Classes that can be implemented into your own Classes to ease the execution of many common tasks.
-
-license: MIT-style license.
-
-requires: Class
-
-provides: [Class.Extras, Chain, Events, Options]
-
-...
-*/
-
   (function () {
     this.Chain = new Class({
       $chain: [],
@@ -7536,22 +7357,6 @@ provides: [Class.Extras, Chain, Events, Options]
     });
   })();
 
-  /*
----
-
-name: Class.Thenable
-
-description: Contains a Utility Class that can be implemented into your own Classes to make them "thenable".
-
-license: MIT-style license.
-
-requires: Class
-
-provides: [Class.Thenable]
-
-...
-*/
-
   (function () {
     var STATE_PENDING = 0,
       STATE_FULFILLED = 1,
@@ -7632,8 +7437,6 @@ provides: [Class.Thenable]
         return thenable;
       },
     });
-
-    // Private functions
 
     function resolve(thenable, value) {
       if (thenable.$thenableState === STATE_PENDING) {
@@ -7765,22 +7568,6 @@ provides: [Class.Thenable]
     }
   })();
 
-  /*
----
-
-name: Object
-
-description: Object generic methods
-
-license: MIT-style license.
-
-requires: Type
-
-provides: [Object, Hash]
-
-...
-*/
-
   (function () {
     Object.extend({
       subset: function (object, keys) {
@@ -7886,14 +7673,6 @@ provides: [Object, Hash]
     });
   })();
 
-  /*
----
-name: Slick.Parser
-description: Standalone CSS3 Selector parser
-provides: Slick.Parser
-...
-*/
-
   (function () {
     var parsed,
       separatorIndex,
@@ -7954,41 +7733,12 @@ provides: Slick.Parser
     };
 
     var escapeRegExp = function (string) {
-      // Credit: XRegExp 0.6.1 (c) 2007-2008 Steven Levithan <http://stevenlevithan.com/regex/xregexp/> MIT License
       return string.replace(/[-[\]{}()*+?.\\^$|,#\s]/g, function (match) {
         return "\\" + match;
       });
     };
 
     var regexp = new RegExp(
-      /*
-#!/usr/bin/env ruby
-puts "\t\t" + DATA.read.gsub(/\(\?x\)|\s+#.*$|\s+|\\$|\\n/,'')
-__END__
-	"(?x)^(?:\
-	  \\s* ( , ) \\s*               # Separator          \n\
-	| \\s* ( <combinator>+ ) \\s*   # Combinator         \n\
-	|      ( \\s+ )                 # CombinatorChildren \n\
-	|      ( <unicode>+ | \\* )     # Tag                \n\
-	| \\#  ( <unicode>+       )     # ID                 \n\
-	| \\.  ( <unicode>+       )     # ClassName          \n\
-	|                               # Attribute          \n\
-	\\[  \
-		\\s* (<unicode1>+)  (?:  \
-			\\s* ([*^$!~|]?=)  (?:  \
-				\\s* (?:\
-					([\"']?)(.*?)\\9 \
-				)\
-			)  \
-		)?  \\s*  \
-	\\](?!\\]) \n\
-	|   :+ ( <unicode>+ )(?:\
-	\\( (?:\
-		(?:([\"'])([^\\12]*)\\12)|((?:\\([^)]+\\)|[^()]*)+)\
-	) \\)\
-	)?\
-	)"
-*/
       "^(?:\\s*(,)\\s*|\\s*(<combinator>+)\\s*|(\\s+)|(<unicode>+|\\*)|\\#(<unicode>+)|\\.(<unicode>+)|\\[\\s*(<unicode1>+)(?:\\s*([*^$!~|]?=)(?:\\s*(?:([\"']?)(.*?)\\9)))?\\s*\\](?!\\])|(:+)(<unicode>+)(?:\\((?:(?:([\"'])([^\\13]*)\\13)|((?:\\([^)]+\\)|[^()]*)+))\\))?)"
         .replace(/<combinator>/, "[" + escapeRegExp(">+~`!@$%^&={}\\;</") + "]")
         .replace(/<unicode>/g, "(?:[\\w\\u00a1-\\uFFFF-]|\\\\[^\\s0-9a-f])")
@@ -8127,8 +7877,6 @@ __END__
       return "";
     }
 
-    // Slick NS
-
     var Slick = this.Slick || {};
 
     Slick.parse = function (expression) {
@@ -8138,27 +7886,12 @@ __END__
     Slick.escapeRegExp = escapeRegExp;
 
     if (!this.Slick) this.Slick = Slick;
-  }).apply(
-    /*<CommonJS>*/ typeof exports != "undefined"
-      ? exports
-      : /*</CommonJS>*/ this
-  );
-
-  /*
----
-name: Slick.Finder
-description: The new, superfast css selector engine.
-provides: Slick.Finder
-requires: Slick.Parser
-...
-*/
+  }).apply(typeof exports != "undefined" ? exports : this);
 
   (function () {
     var local = {},
       featuresCache = {},
       toString = Object.prototype.toString;
-
-    // Feature / Bug detection
 
     local.isNativeCode = function (fn) {
       return /\{\s*\[native code\]\s*\}/.test("" + fn);
@@ -8174,21 +7907,14 @@ requires: Slick.Parser
     };
 
     local.setDocument = function (document) {
-      // convert elements / window arguments to document. if document cannot be extrapolated, the function returns.
       var nodeType = document.nodeType;
       if (nodeType == 9);
-      else if (nodeType)
-        // document
-        document = document.ownerDocument; // node
-      else if (document.navigator) document = document.document; // window
+      else if (nodeType) document = document.ownerDocument;
+      else if (document.navigator) document = document.document;
       else return;
-
-      // check if it's the old document
 
       if (this.document === document) return;
       this.document = document;
-
-      // check if we have done feature detection on this document before
 
       var root = document.documentElement,
         rootUid = this.getUIDXML(root),
@@ -8232,7 +7958,6 @@ requires: Slick.Parser
         document.body || document.getElementsByTagName("body")[0] || root;
       testRoot.appendChild(testNode);
 
-      // on non-HTML documents innerHTML and getElementsById doesnt work properly
       try {
         testNode.innerHTML = '<a id="' + id + '"></a>';
         features.isHTMLDocument = !!document.getElementById(id);
@@ -8241,11 +7966,9 @@ requires: Slick.Parser
       if (features.isHTMLDocument) {
         testNode.style.display = "none";
 
-        // IE returns comment nodes for getElementsByTagName('*') for some documents
         testNode.appendChild(document.createComment(""));
         starSelectsComments = testNode.getElementsByTagName("*").length > 1;
 
-        // IE returns closed nodes (EG:"</foo>") for getElementsByTagName('*') for some documents
         try {
           testNode.innerHTML = "foo</foo>";
           selected = testNode.getElementsByTagName("*");
@@ -8257,7 +7980,6 @@ requires: Slick.Parser
 
         features.brokenStarGEBTN = starSelectsComments || starSelectsClosed;
 
-        // IE returns elements with the name instead of just id for getElementsById for some documents
         try {
           testNode.innerHTML =
             '<a name="' + id + '"></a><b id="' + id + '"></b>';
@@ -8266,7 +7988,6 @@ requires: Slick.Parser
         } catch (e) {}
 
         if (testNode.getElementsByClassName) {
-          // Safari 3.2 getElementsByClassName caches results
           try {
             testNode.innerHTML = '<a class="f"></a><a class="b"></a>';
             testNode.getElementsByClassName("b").length;
@@ -8275,7 +7996,6 @@ requires: Slick.Parser
               testNode.getElementsByClassName("b").length != 2;
           } catch (e) {}
 
-          // Opera 9.6 getElementsByClassName doesnt detects the class if its not the first one
           try {
             testNode.innerHTML = '<a class="a"></a><a class="f b a"></a>';
             brokenSecondClassNameGEBCN =
@@ -8287,7 +8007,6 @@ requires: Slick.Parser
         }
 
         if (testNode.querySelectorAll) {
-          // IE 8 returns closed nodes (EG:"</foo>") for querySelectorAll('*') for some documents
           try {
             testNode.innerHTML = "foo</foo>";
             selected = testNode.querySelectorAll("*");
@@ -8297,14 +8016,12 @@ requires: Slick.Parser
               selected[0].nodeName.charAt(0) == "/";
           } catch (e) {}
 
-          // Safari 3.2 querySelectorAll doesnt work with mixedcase on quirksmode
           try {
             testNode.innerHTML = '<a class="MiX"></a>';
             features.brokenMixedCaseQSA =
               !testNode.querySelectorAll(".MiX").length;
           } catch (e) {}
 
-          // Webkit and Opera dont return selected options on querySelectorAll
           try {
             testNode.innerHTML =
               '<select><option selected="selected">a</option></select>';
@@ -8312,7 +8029,6 @@ requires: Slick.Parser
               testNode.querySelectorAll(":checked").length == 0;
           } catch (e) {}
 
-          // IE returns incorrect results for attr[*^$]="" selectors on querySelectorAll
           try {
             testNode.innerHTML = '<a class=""></a>';
             features.brokenEmptyAttributeQSA =
@@ -8320,14 +8036,11 @@ requires: Slick.Parser
           } catch (e) {}
         }
 
-        // IE6-7, if a form has an input of id x, form.getAttribute(x) returns a reference to the input
         try {
           testNode.innerHTML = '<form action="s"><input id="action"/></form>';
           brokenFormAttributeGetter =
             testNode.firstChild.getAttribute("action") != "s";
         } catch (e) {}
-
-        // native matchesSelector function
 
         features.nativeMatchesSelector =
           root.matches ||
@@ -8335,7 +8048,6 @@ requires: Slick.Parser
           root.webkitMatchesSelector;
         if (features.nativeMatchesSelector)
           try {
-            // if matchesSelector trows errors on incorrect sintaxes we can use it
             features.nativeMatchesSelector.call(root, ":slick");
             features.nativeMatchesSelector = null;
           } catch (e) {}
@@ -8352,8 +8064,6 @@ requires: Slick.Parser
       testRoot.removeChild(testNode);
       testNode = selected = testRoot = null;
 
-      // getAttribute
-
       features.getAttribute =
         features.isHTMLDocument && brokenFormAttributeGetter
           ? function (node, name) {
@@ -8367,8 +8077,6 @@ requires: Slick.Parser
               return method ? method.call(node) : node.getAttribute(name);
             };
 
-      // hasAttribute
-
       features.hasAttribute =
         root && this.isNativeCode(root.hasAttribute)
           ? function (node, attribute) {
@@ -8379,8 +8087,6 @@ requires: Slick.Parser
               return !!(node && (node.specified || node.nodeValue));
             };
 
-      // contains
-      // FIXME: Add specs: local.contains should be different for xml and html documents?
       var nativeRootContains = root && this.isNativeCode(root.contains),
         nativeDocumentContains =
           document && this.isNativeCode(document.contains);
@@ -8392,7 +8098,6 @@ requires: Slick.Parser
             }
           : nativeRootContains && !nativeDocumentContains
           ? function (context, node) {
-              // IE8 does not have .contains on document.
               return (
                 context === node ||
                 (context === document
@@ -8415,9 +8120,6 @@ requires: Slick.Parser
                 } while ((node = node.parentNode));
               return false;
             };
-
-      // document order sorting
-      // credits to Sizzle (http://sizzlejs.com/)
 
       features.documentSorter = root.compareDocumentPosition
         ? function (a, b) {
@@ -8450,8 +8152,6 @@ requires: Slick.Parser
       }
     };
 
-    // Main Method
-
     var reSimpleSelector = /^([#.]?)((?:[\w-]+|\*))$/,
       reEmptyAttribute = /\[.+[*$^]=(?:""|'')?\]/,
       qsaFailExpCache = {};
@@ -8460,12 +8160,8 @@ requires: Slick.Parser
       var found = (this.found = first ? null : append || []);
 
       if (!context) return found;
-      else if (context.navigator)
-        context =
-          context.document; // Convert the node from a window to a document
+      else if (context.navigator) context = context.document;
       else if (!context.nodeType) return found;
-
-      // setup
 
       var parsed,
         i,
@@ -8480,15 +8176,10 @@ requires: Slick.Parser
       )
         this.setDocument(context);
 
-      // avoid duplicating items already in the append array
       if (hasOthers)
         for (i = found.length; i--; ) uniques[this.getUID(found[i])] = true;
 
-      // expression checks
-
       if (typeof expression == "string") {
-        // expression is a string
-
         /*<simple-selectors-override>*/
         var simpleSelector = expression.match(reSimpleSelector);
         simpleSelectors: if (simpleSelector) {
@@ -8559,8 +8250,6 @@ requires: Slick.Parser
             (this.brokenEmptyAttributeQSA &&
               reEmptyAttribute.test(expression)) ||
             (!contextIsDocument && //Abort when !contextIsDocument and...
-              //  there are multiple expressions in the selector
-              //  since we currently only fix non-document rooted QSA for single expression selectors
               expression.indexOf(",") > -1) ||
             Slick.disableQSA
           )
@@ -8570,8 +8259,6 @@ requires: Slick.Parser
             _context = context,
             currentId;
           if (!contextIsDocument) {
-            // non-document rooted QSA
-            // credits to Andrew Dupont
             (currentId = _context.getAttribute("id")), (slickid = "slickid__");
             _context.setAttribute("id", slickid);
             _expression = "#" + slickid + " " + _expression;
@@ -8613,34 +8300,23 @@ requires: Slick.Parser
         parsed = this.Slick.parse(expression);
         if (!parsed.length) return found;
       } else if (expression == null) {
-        // there is no expression
         return found;
       } else if (expression.Slick) {
-        // expression is a parsed Slick object
         parsed = expression;
       } else if (
         this.contains(context.documentElement || context, expression)
       ) {
-        // expression is a node
         found ? found.push(expression) : (found = expression);
         return found;
       } else {
-        // other junk
         return found;
       }
-
-      /*<pseudo-selectors>*/ /*<nth-pseudo-selectors>*/
-
-      // cache elements for the nth selectors
 
       this.posNTH = {};
       this.posNTHLast = {};
       this.posNTHType = {};
       this.posNTHTypeLast = {};
 
-      /*</nth-pseudo-selectors>*/ /*</pseudo-selectors>*/
-
-      // if append is null and there is only a single selector with one expression use pushArray, else use pushUID
       this.push =
         !hasOthers &&
         (first || (parsed.length == 1 && parsed.expressions[0].length == 1))
@@ -8648,8 +8324,6 @@ requires: Slick.Parser
           : this.pushUID;
 
       if (found == null) found = [];
-
-      // default engine
 
       var j, m, n;
       var combinator, tag, id, classList, classes, attributes, pseudos;
@@ -8725,13 +8399,10 @@ requires: Slick.Parser
           currentItems = this.found;
         }
 
-      // should sort if there are nodes in append and if you pass multiple expressions.
       if (hasOthers || parsed.expressions.length > 1) this.sort(found);
 
       return first ? found[0] || null : found;
     };
-
-    // Utils
 
     local.uidx = 1;
     local.uidk = "slick-uniqueid";
@@ -8749,15 +8420,11 @@ requires: Slick.Parser
       return node.uniqueNumber || (node.uniqueNumber = this.uidx++);
     };
 
-    // sort based on the setDocument documentSorter method.
-
     local.sort = function (results) {
       if (!this.documentSorter) return results;
       results.sort(this.documentSorter);
       return results;
     };
-
-    /*<pseudo-selectors>*/ /*<nth-pseudo-selectors>*/
 
     local.cacheNTH = {};
 
@@ -8819,8 +8486,6 @@ requires: Slick.Parser
       };
     };
 
-    /*</nth-pseudo-selectors>*/ /*</pseudo-selectors>*/
-
     local.pushArray = function (node, tag, id, classes, attributes, pseudos) {
       if (this.matchSelector(node, tag, id, classes, attributes, pseudos))
         this.found.push(node);
@@ -8850,7 +8515,6 @@ requires: Slick.Parser
       var parsed = this.Slick.parse(selector);
       if (!parsed) return true;
 
-      // simple (single) selectors
       var expressions = parsed.expressions,
         simpleExpCounter = 0,
         i,
@@ -8903,7 +8567,7 @@ requires: Slick.Parser
           ? node.nodeName
           : node.nodeName.toUpperCase();
         if (tag == "*") {
-          if (nodeName < "@") return false; // Fix for comment nodes and closed nodes
+          if (nodeName < "@") return false;
         } else {
           if (nodeName != tag) return false;
         }
@@ -8937,8 +8601,6 @@ requires: Slick.Parser
 
     var combinators = {
       " ": function (node, tag, id, classes, attributes, pseudos, classList) {
-        // all child nodes, any level
-
         var i, item, children;
 
         if (this.isHTMLDocument) {
@@ -8950,8 +8612,6 @@ requires: Slick.Parser
                 item &&
                 item.getAttributeNode("id").nodeValue != id)
             ) {
-              // all[id] returns all the elements with that name or id inside node
-              // if theres just one it will return the element, else it will be a collection
               children = node.all[id];
               if (!children) return;
               if (!children[0]) children = [children];
@@ -8965,7 +8625,6 @@ requires: Slick.Parser
               return;
             }
             if (!item) {
-              // if the context is in the dom we return, else we will try GEBTN, breaking the getById label
               if (this.contains(this.root, node)) return;
               else break getById;
             } else if (this.document !== node && !this.contains(node, item))
@@ -8995,7 +8654,6 @@ requires: Slick.Parser
       },
 
       ">": function (node, tag, id, classes, attributes, pseudos) {
-        // direct children
         if ((node = node.firstChild))
           do {
             if (node.nodeType == 1)
@@ -9004,7 +8662,6 @@ requires: Slick.Parser
       },
 
       "+": function (node, tag, id, classes, attributes, pseudos) {
-        // next sibling
         while ((node = node.nextSibling))
           if (node.nodeType == 1) {
             this.push(node, tag, id, classes, attributes, pseudos);
@@ -9013,7 +8670,6 @@ requires: Slick.Parser
       },
 
       "^": function (node, tag, id, classes, attributes, pseudos) {
-        // first child
         node = node.firstChild;
         if (node) {
           if (node.nodeType == 1)
@@ -9024,7 +8680,6 @@ requires: Slick.Parser
       },
 
       "~": function (node, tag, id, classes, attributes, pseudos) {
-        // next siblings
         while ((node = node.nextSibling)) {
           if (node.nodeType != 1) continue;
           var uid = this.getUID(node);
@@ -9035,33 +8690,28 @@ requires: Slick.Parser
       },
 
       "++": function (node, tag, id, classes, attributes, pseudos) {
-        // next sibling and previous sibling
         this["combinator:+"](node, tag, id, classes, attributes, pseudos);
         this["combinator:!+"](node, tag, id, classes, attributes, pseudos);
       },
 
       "~~": function (node, tag, id, classes, attributes, pseudos) {
-        // next siblings and previous siblings
         this["combinator:~"](node, tag, id, classes, attributes, pseudos);
         this["combinator:!~"](node, tag, id, classes, attributes, pseudos);
       },
 
       "!": function (node, tag, id, classes, attributes, pseudos) {
-        // all parent nodes up to document
         while ((node = node.parentNode))
           if (node !== this.document)
             this.push(node, tag, id, classes, attributes, pseudos);
       },
 
       "!>": function (node, tag, id, classes, attributes, pseudos) {
-        // direct parent (one level)
         node = node.parentNode;
         if (node !== this.document)
           this.push(node, tag, id, classes, attributes, pseudos);
       },
 
       "!+": function (node, tag, id, classes, attributes, pseudos) {
-        // previous sibling
         while ((node = node.previousSibling))
           if (node.nodeType == 1) {
             this.push(node, tag, id, classes, attributes, pseudos);
@@ -9070,7 +8720,6 @@ requires: Slick.Parser
       },
 
       "!^": function (node, tag, id, classes, attributes, pseudos) {
-        // last child
         node = node.lastChild;
         if (node) {
           if (node.nodeType == 1)
@@ -9081,7 +8730,6 @@ requires: Slick.Parser
       },
 
       "!~": function (node, tag, id, classes, attributes, pseudos) {
-        // previous siblings
         while ((node = node.previousSibling)) {
           if (node.nodeType != 1) continue;
           var uid = this.getUID(node);
@@ -9133,8 +8781,6 @@ requires: Slick.Parser
         return true;
       },
 
-      /*<nth-pseudo-selectors>*/
-
       "nth-child": local.createNTHPseudo("firstChild", "nextSibling", "posNTH"),
 
       "nth-last-child": local.createNTHPseudo(
@@ -9169,10 +8815,6 @@ requires: Slick.Parser
         return this["pseudo:nth-child"](node, "2n+1");
       },
 
-      /*</nth-pseudo-selectors>*/
-
-      /*<of-type-pseudo-selectors>*/
-
       "first-of-type": function (node) {
         var nodeName = node.nodeName;
         while ((node = node.previousSibling))
@@ -9199,8 +8841,6 @@ requires: Slick.Parser
       },
 
       /*</of-type-pseudo-selectors>*/
-
-      // custom pseudos
 
       enabled: function (node) {
         return !node.disabled;
@@ -9229,13 +8869,9 @@ requires: Slick.Parser
       selected: function (node) {
         return node.selected;
       },
-
-      /*</pseudo-selectors>*/
     };
 
     for (var p in pseudos) local["pseudo:" + p] = pseudos[p];
-
-    // attributes methods
 
     var attributeGetters = (local.attributeGetters = {
       for: function () {
@@ -9274,13 +8910,9 @@ requires: Slick.Parser
     attributeGetters.MAXLENGTH = attributeGetters.maxLength =
       attributeGetters.maxlength;
 
-    // Slick
-
     var Slick = (local.Slick = this.Slick || {});
 
     Slick.version = "1.1.7";
-
-    // Slick finder
 
     Slick.search = function (context, expression, append) {
       return local.search(context, expression, append);
@@ -9290,14 +8922,10 @@ requires: Slick.Parser
       return local.search(context, expression, null, true);
     };
 
-    // Slick containment checker
-
     Slick.contains = function (container, node) {
       local.setDocument(container);
       return local.contains(container, node);
     };
-
-    // Slick attribute getter
 
     Slick.getAttribute = function (node, name) {
       local.setDocument(node);
@@ -9309,16 +8937,12 @@ requires: Slick.Parser
       return local.hasAttribute(node, name);
     };
 
-    // Slick matcher
-
     Slick.match = function (node, selector) {
       if (!(node && selector)) return false;
       if (!selector || selector === node) return true;
       local.setDocument(node);
       return local.matchNode(node, selector);
     };
-
-    // Slick attribute accessor
 
     Slick.defineAttributeGetter = function (name, fn) {
       local.attributeGetters[name] = fn;
@@ -9328,8 +8952,6 @@ requires: Slick.Parser
     Slick.lookupAttributeGetter = function (name) {
       return local.attributeGetters[name];
     };
-
-    // Slick pseudo accessor
 
     Slick.definePseudo = function (name, fn) {
       local["pseudo:" + name] = function (node, argument) {
@@ -9347,8 +8969,6 @@ requires: Slick.Parser
       return null;
     };
 
-    // Slick overrides accessor
-
     Slick.override = function (regexp, fn) {
       local.override(regexp, fn);
       return this;
@@ -9361,27 +8981,7 @@ requires: Slick.Parser
     };
 
     if (!this.Slick) this.Slick = Slick;
-  }).apply(
-    /*<CommonJS>*/ typeof exports != "undefined"
-      ? exports
-      : /*</CommonJS>*/ this
-  );
-
-  /*
----
-
-name: Element
-
-description: One of the most important items in MooTools. Contains the dollar function, the dollars function, and an handful of cross-browser, time-saver methods to let you easily work with HTML Elements.
-
-license: MIT-style license.
-
-requires: [Window, Document, Array, String, Function, Object, Number, Slick.Parser, Slick.Finder]
-
-provides: [Element, Elements, $, $$, IFrame, Selectors]
-
-...
-*/
+  }).apply(typeof exports != "undefined" ? exports : this);
 
   var Element = (this.Element = function (tag, props) {
     var konstructor = Element.Constructors[tag];
@@ -9415,7 +9015,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
 
   if (Browser.Element) {
     Element.prototype = Browser.Element.prototype;
-    // IE8 and IE9 require the wrapping.
+
     Element.prototype._fireEvent = (function (fireEvent) {
       return function (type, event) {
         return fireEvent.call(this, type, event);
@@ -9560,7 +9160,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
   });
 
   (function () {
-    // FF, IE
     var splice = Array.prototype.splice,
       object = { 0: 0, 1: 1, length: 2 };
 
@@ -9595,7 +9194,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
     /*</ltIE8>*/
 
     /*<ltIE9>*/
-    // #2479 - IE8 Cannot set HTML of style element
+
     var canChangeStyleHTML = (function () {
       var div = document.createElement("style"),
         flag = false;
@@ -9616,7 +9215,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
             props.value == null
           )
             props.value = "on";
-          /*<ltIE9>*/ // IE needs the type to be set before changing content of style element
+          /*<ltIE9>*/
           if (!canChangeStyleHTML && tag == "style") {
             var styleElement = document.createElement("style");
             styleElement.setAttribute("type", "text/css");
@@ -9624,7 +9223,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
             return this.id(styleElement).set(props);
           }
           /*</ltIE9>*/
-          /*<ltIE8>*/ // Fix for readonly name and type properties in IE < 8
+          /*<ltIE8>*/
           if (createElementAcceptsHTML) {
             tag = "<" + tag;
             if (props.name) tag += ' name="' + escapeQuotes(props.name) + '"';
@@ -9672,7 +9271,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
               !/^(?:object|embed)$/i.test(el.tagName)
             ) {
               var fireEvent = el.fireEvent;
-              // wrapping needed in IE7, or else crash
+
               el._fireEvent = function (type, event) {
                 return fireEvent(type, event);
               };
@@ -9736,8 +9335,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
 
     if (!document.contains) Document.implement(contains);
     if (!document.createElement("div").contains) Element.implement(contains);
-
-    // tree walking
 
     var injectCombinator = function (expression, combinator) {
       if (!expression) return combinator;
@@ -9821,8 +9418,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
         return new Elements(arguments);
       });
 
-    // Inserters
-
     var inserters = {
       before: function (context, element) {
         var parent = element.parentNode;
@@ -9845,12 +9440,8 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
 
     inserters.inside = inserters.bottom;
 
-    // getProperty / setProperty
-
     var propertyGetters = {},
       propertySetters = {};
-
-    // properties
 
     var properties = {};
     Array.forEach(
@@ -9902,8 +9493,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
     })(propertyGetters.text);
     /*</ltIE9>*/
 
-    // Booleans
-
     var bools = [
       "compact",
       "nowrap",
@@ -9935,8 +9524,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
         return !!node[bool];
       };
     });
-
-    // Special cases
 
     Object.append(propertySetters, {
       class: function (node, value) {
@@ -9970,7 +9557,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
 
     /* <webkit> */
     var el = document.createElement("button");
-    // IE sets type as readonly and throws
+
     try {
       el.type = "button";
     } catch (e) {}
@@ -9984,7 +9571,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
     /*<IE>*/
 
     /*<ltIE9>*/
-    // #2479 - IE8 Cannot set HTML of style element
+
     var canChangeStyleHTML = (function () {
       var div = document.createElement("style"),
         flag = false;
@@ -10000,12 +9587,10 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
       volatileInputValue,
       html5InputSupport;
 
-    // #2178
     input.value = "t";
     input.type = "submit";
     volatileInputValue = input.value != "t";
 
-    // #2443 - IE throws "Invalid Argument" when trying to use html5 input types
     try {
       input.value = "";
       input.type = "email";
@@ -10037,7 +9622,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
         '<object><param name="should_fix" value="the unknown" /></object>';
       return test.cloneNode(true).firstChild.childNodes.length != 1;
     })(document.createElement("div"));
-    /* </ltIE9> */
 
     var hasClassList = !!document.createElement("div").classList;
 
@@ -10101,7 +9685,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
           if (!attr) return null;
           if (attr.expando && !attributeWhiteList[name]) {
             var outer = this.outerHTML;
-            // segment by the opening tag and find mention of attribute name
+
             if (
               outer
                 .substr(0, outer.search(/\/?['"]?>(?![^<]*<['"])/))
@@ -10232,7 +9816,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
       },
 
       getSelected: function () {
-        this.selectedIndex; // Safari 3.2.1
+        this.selectedIndex;
         return new Elements(
           Array.convert(this.options).filter(function (option) {
             return option.selected;
@@ -10257,7 +9841,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
           var value =
             el.get("tag") == "select"
               ? el.getSelected().map(function (opt) {
-                  // IE
                   return document.id(opt).get("value");
                 })
               : (type == "radio" || type == "checkbox") && !el.checked
@@ -10274,8 +9857,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
         return queryString.join("&");
       },
     });
-
-    // appendHTML
 
     var appendInserters = {
       before: "beforeBegin",
@@ -10428,7 +10009,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
       },
     });
 
-    /*<ltIE9>*/
     if (window.attachEvent && !window.addEventListener) {
       var gc = function () {
         Object.each(collected, clean);
@@ -10437,7 +10017,6 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
       };
       window.addListener("unload", gc);
     }
-    /*</ltIE9>*/
 
     Element.Properties = {};
 
@@ -10481,7 +10060,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
       supportsTRInnerHTML = true;
 
     /*<ltIE9>*/
-    // technique by jdbarlett - http://jdbartlett.com/innershiv/
+
     var div = document.createElement("div");
     var fragment;
     div.innerHTML = "<nav></nav>";
@@ -10495,22 +10074,18 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
       while (l--) fragment.createElement(tags[l]);
     }
     div = null;
-    /*</ltIE9>*/
 
-    /*<IE>*/
     supportsTableInnerHTML = Function.attempt(function () {
       var table = document.createElement("table");
       table.innerHTML = "<tr><td></td></tr>";
       return true;
     });
 
-    /*<ltFF4>*/
     var tr = document.createElement("tr"),
       html = "<td></td>";
     tr.innerHTML = html;
     supportsTRInnerHTML = tr.innerHTML == html;
     tr = null;
-    /*</ltFF4>*/
 
     if (
       !supportsTableInnerHTML ||
@@ -10598,24 +10173,7 @@ provides: [Element, Elements, $, $$, IFrame, Selectors]
           this.id = this.getAttributeNode("id").value = "";
         },
       };
-    /*</IE>*/
   })();
-
-  /*
----
-
-name: Event
-
-description: Contains the Event Type, to make the event object cross-browser.
-
-license: MIT-style license.
-
-requires: [Window, Document, Array, Function, String, Object]
-
-provides: Event
-
-...
-*/
 
   (function () {
     var _keys = {};
@@ -10752,22 +10310,6 @@ provides: Event
     });
   })();
 
-  /*
----
-
-name: Element.Event
-
-description: Contains Element methods for dealing with events. This file also includes mouseenter and mouseleave custom Element Events, if necessary.
-
-license: MIT-style license.
-
-requires: [Element, Event]
-
-provides: Element.Event
-
-...
-*/
-
   (function () {
     Element.Properties.events = {
       set: function (events) {
@@ -10891,26 +10433,26 @@ provides: Element.Event
       dblclick: 2,
       mouseup: 2,
       mousedown: 2,
-      contextmenu: 2, //mouse buttons
+      contextmenu: 2,
       wheel: 2,
       mousewheel: 2,
-      DOMMouseScroll: 2, //mouse wheel
+      DOMMouseScroll: 2,
       mouseover: 2,
       mouseout: 2,
       mousemove: 2,
       selectstart: 2,
-      selectend: 2, //mouse movement
+      selectend: 2,
       keydown: 2,
       keypress: 2,
-      keyup: 2, //keyboard
-      orientationchange: 2, // mobile
+      keyup: 2,
+      orientationchange: 2,
       touchstart: 2,
       touchmove: 2,
       touchend: 2,
-      touchcancel: 2, // touch
+      touchcancel: 2,
       gesturestart: 2,
       gesturechange: 2,
-      gestureend: 2, // gesture
+      gestureend: 2,
       focus: 2,
       blur: 2,
       change: 2,
@@ -10929,7 +10471,7 @@ provides: Element.Event
       hashchange: 1,
       popstate: 2,
       pageshow: 2,
-      pagehide: 2, // history
+      pagehide: 2,
       error: 1,
       abort: 1,
       scroll: 1,
@@ -10993,24 +10535,7 @@ provides: Element.Event
         },
       };
     }
-    /*</ltIE9>*/
   })();
-
-  /*
----
-
-name: Element.Delegation
-
-description: Extends the Element native object to include the delegate method for more efficient event management.
-
-license: MIT-style license.
-
-requires: [Element.Event]
-
-provides: [Element.Delegation]
-
-...
-*/
 
   (function () {
     var eventListenerSupport = !!window.addEventListener;
@@ -11053,9 +10578,6 @@ provides: [Element.Delegation]
           var list = self.retrieve(_key + type + "listeners", {})[uid];
           if (list && list.forms)
             for (var i = list.forms.length; i--; ) {
-              // the form may have been destroyed, so it won't have the
-              // removeEvent method anymore. In that case the event was
-              // removed as well.
               if (list.forms[i].removeEvent)
                 list.forms[i].removeEvent(type, list.fns[i]);
             }
@@ -11227,34 +10749,15 @@ provides: [Element.Delegation]
     });
   })();
 
-  /*
----
-
-name: Element.Style
-
-description: Contains methods for interacting with the styles of Elements in a fashionable way.
-
-license: MIT-style license.
-
-requires: Element
-
-provides: Element.Style
-
-...
-*/
-
   (function () {
     var html = document.html,
       el;
 
-    //<ltIE9>
-    // Check for oldIE, which does not remove styles when they're set to null
     el = document.createElement("div");
     el.style.color = "red";
     el.style.color = null;
     var doesNotRemoveStyles = el.style.color == "red";
 
-    // check for oldIE, which returns border* shorthand styles in the wrong order (color-width-style instead of width-style-color)
     var border = "1px solid #123abc";
     el.style.border = border;
     var returnsBordersInWrongOrder = el.style.border != border;
@@ -11470,7 +10973,6 @@ provides: Element.Style
             return "0px";
           }
         }
-        //<ltIE9>
         if (
           returnsBordersInWrongOrder &&
           /^border(Top|Right|Bottom|Left)?$/.test(property) &&
@@ -11478,7 +10980,6 @@ provides: Element.Style
         ) {
           return result.replace(/^(.+)\s(.+)\s(.+)$/, "$2 $3 $1");
         }
-        //</ltIE9>
 
         return result;
       },
@@ -11564,26 +11065,6 @@ provides: Element.Style
       };
   })();
 
-  /*
----
-
-name: Element.Dimensions
-
-description: Contains methods to work with size, scroll, or positioning of Elements and the window object.
-
-license: MIT-style license.
-
-credits:
-  - Element positioning based on the [qooxdoo](http://qooxdoo.org/) code and smart browser fixes, [LGPL License](http://www.gnu.org/licenses/lgpl.html).
-  - Viewport dimensions based on [YUI](http://developer.yahoo.com/yui/) code, [BSD License](http://developer.yahoo.com/yui/license.html).
-
-requires: [Element, Element.Style]
-
-provides: [Element.Dimensions]
-
-...
-*/
-
   (function () {
     var element = document.createElement("div"),
       child = document.createElement("div");
@@ -11643,13 +11124,11 @@ provides: [Element.Dimensions]
         if (isBody(this)) return this.getWindow().getSize();
 
         //<ltIE9>
-        // This if clause is because IE8- cannot calculate getBoundingClientRect of elements with visibility hidden.
+
         if (!window.getComputedStyle)
           return { x: this.offsetWidth, y: this.offsetHeight };
         //</ltIE9>
 
-        // This svg section under, calling `svgCalculateSize()`, can be removed when FF fixed the svg size bug.
-        // Bug info: https://bugzilla.mozilla.org/show_bug.cgi?id=530985
         if (this.get("tag") == "svg") return svgCalculateSize(this);
 
         try {
@@ -11833,8 +11312,6 @@ provides: [Element.Dimensions]
       },
     });
 
-    // private methods
-
     var styleString = Element.getComputedStyle;
 
     function styleNumber(element, style) {
@@ -11898,32 +11375,11 @@ provides: [Element.Dimensions]
     },
   });
 
-  /*
----
-
-name: Fx
-
-description: Contains the basic animation logic to be extended by all other Fx Classes.
-
-license: MIT-style license.
-
-requires: [Chain, Events, Options, Class.Thenable]
-
-provides: Fx
-
-...
-*/
-
   (function () {
     var Fx = (this.Fx = new Class({
       Implements: [Chain, Events, Options, Class.Thenable],
 
       options: {
-        /*
-		onStart: nil,
-		onCancel: nil,
-		onComplete: nil,
-		*/
         fps: 60,
         unit: false,
         duration: 500,
@@ -12061,8 +11517,6 @@ provides: Fx
 
     Fx.Durations = { short: 250, normal: 500, long: 1000 };
 
-    // global timers
-
     var instances = {},
       timers = {};
 
@@ -12093,26 +11547,8 @@ provides: Fx
     };
   })();
 
-  /*
----
-
-name: Fx.CSS
-
-description: Contains the CSS animation logic. Used by Fx.Tween, Fx.Morph, Fx.Elements.
-
-license: MIT-style license.
-
-requires: [Fx, Element.Style]
-
-provides: Fx.CSS
-
-...
-*/
-
   Fx.CSS = new Class({
     Extends: Fx,
-
-    //prepares the base from/to object
 
     prepare: function (element, property, values) {
       values = Array.convert(values);
@@ -12122,7 +11558,7 @@ provides: Fx.CSS
         to = from;
         from = element.getStyle(property);
         var unit = this.options.unit;
-        // adapted from: https://github.com/ryanmorr/fx/blob/master/fx.js#L299
+
         if (
           unit &&
           from &&
@@ -12132,11 +11568,10 @@ provides: Fx.CSS
         ) {
           element.setStyle(property, to + unit);
           var value = element.getComputedStyle(property);
-          // IE and Opera support pixelLeft or pixelWidth
+
           if (!/px$/.test(value)) {
             value = element.style[("pixel-" + property).camelCase()];
             if (value == null) {
-              // adapted from Dean Edwards' http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
               var left = element.style.left;
               element.style.left = to + unit;
               value = element.style.pixelLeft;
@@ -12195,13 +11630,9 @@ provides: Fx.CSS
       return returned;
     },
 
-    //renders the change to an element
-
     render: function (element, property, value, unit) {
       element.setStyle(property, this.serve(value, unit));
     },
-
-    //searches inside the page css to find the values for a selector
 
     search: function (selector) {
       if (Fx.CSS.Cache[selector]) return Fx.CSS.Cache[selector];
@@ -12283,22 +11714,6 @@ provides: Fx.CSS
     },
   };
 
-  /*
----
-
-name: Fx.Morph
-
-description: Formerly Fx.Styles, effect to transition any number of CSS properties for an element using an object of rules, or CSS based selector rules.
-
-license: MIT-style license.
-
-requires: Fx.CSS
-
-provides: Fx.Morph
-
-...
-*/
-
   Fx.Morph = new Class({
     Extends: Fx.CSS,
 
@@ -12356,25 +11771,6 @@ provides: Fx.Morph
       return this;
     },
   });
-
-  /*
----
-
-name: Fx.Transitions
-
-description: Contains a set of advanced transitions to be used with any of the Fx Classes.
-
-license: MIT-style license.
-
-credits:
-  - Easing Equations by Robert Penner, <http://www.robertpenner.com/easing/>, modified and optimized to be used with MooTools.
-
-requires: Fx
-
-provides: Fx.Transitions
-
-...
-*/
 
   Fx.implement({
     getTransition: function () {
@@ -12472,22 +11868,6 @@ provides: Fx.Transitions
       return Math.pow(p, i + 2);
     });
   });
-
-  /*
----
-
-name: Fx.Tween
-
-description: Formerly Fx.Style, effect to transition any CSS property for an element.
-
-license: MIT-style license.
-
-requires: Fx.CSS
-
-provides: [Fx.Tween, Element.fade, Element.highlight]
-
-...
-*/
 
   Fx.Tween = new Class({
     Extends: Fx.CSS,
@@ -12618,22 +11998,6 @@ provides: [Fx.Tween, Element.fade, Element.highlight]
     },
   });
 
-  /*
----
-
-name: Request
-
-description: Powerful all purpose Request Class. Uses XMLHTTPRequest.
-
-license: MIT-style license.
-
-requires: [Object, Element, Chain, Events, Options, Class.Thenable, Browser]
-
-provides: Request
-
-...
-*/
-
   (function () {
     var empty = function () {},
       progressSupport = "onprogress" in new Browser.Request();
@@ -12642,19 +12006,6 @@ provides: Request
       Implements: [Chain, Events, Options, Class.Thenable],
 
       options: {
-        /*
-		onRequest: function(){},
-		onLoadstart: function(event, xhr){},
-		onProgress: function(event, xhr){},
-		onComplete: function(){},
-		onCancel: function(){},
-		onSuccess: function(responseText, responseXML){},
-		onFailure: function(xhr){},
-		onException: function(headerName, value){},
-		onTimeout: function(){},
-		user: '',
-		password: '',
-		withCredentials: false,*/
         url: "",
         data: "",
         headers: {
@@ -12962,22 +12313,6 @@ provides: Request
     });
   })();
 
-  /*
----
-
-name: Request.HTML
-
-description: Extends the basic Request Class with additional methods for interacting with HTML responses.
-
-license: MIT-style license.
-
-requires: [Element, Request]
-
-provides: Request.HTML
-
-...
-*/
-
   Request.HTML = new Class({
     Extends: Request,
 
@@ -13064,24 +12399,6 @@ provides: Request.HTML
     },
   });
 
-  /*
----
-
-name: JSON
-
-description: JSON encoder and decoder.
-
-license: MIT-style license.
-
-SeeAlso: <http://www.json.org/>
-
-requires: [Array, String, Number, Function]
-
-provides: JSON
-
-...
-*/
-
   if (typeof JSON == "undefined") this.JSON = {};
 
   (function () {
@@ -13162,27 +12479,10 @@ provides: JSON
     };
   })();
 
-  /*
----
-
-name: Request.JSON
-
-description: Extends the basic Request Class with additional methods for sending and receiving JSON data.
-
-license: MIT-style license.
-
-requires: [Request, JSON]
-
-provides: Request.JSON
-
-...
-*/
-
   Request.JSON = new Class({
     Extends: Request,
 
     options: {
-      /*onError: function(text, error){},*/
       secure: true,
     },
 
@@ -13210,25 +12510,6 @@ provides: Request.JSON
       }
     },
   });
-
-  /*
----
-
-name: Cookie
-
-description: Class for creating, reading, and deleting browser Cookies.
-
-license: MIT-style license.
-
-credits:
-  - Based on the functions by Peter-Paul Koch (http://quirksmode.org).
-
-requires: [Options, Browser]
-
-provides: Cookie
-
-...
-*/
 
   var Cookie = new Class({
     Implements: Options,
@@ -13293,22 +12574,6 @@ provides: Cookie
     return new Cookie(key, options).dispose();
   };
 
-  /*
----
-
-name: DOMReady
-
-description: Contains the custom event domready.
-
-license: MIT-style license.
-
-requires: [Browser, Element, Element.Event]
-
-provides: [DOMReady, DomReady]
-
-...
-*/
-
   (function (window, document) {
     var ready,
       loaded,
@@ -13327,7 +12592,7 @@ provides: [DOMReady, DomReady]
         document.fireEvent("domready");
         window.fireEvent("domready");
       }
-      // cleanup scope vars
+
       document = window = testElement = null;
     };
 
@@ -13348,8 +12613,7 @@ provides: [DOMReady, DomReady]
     document.addListener("DOMContentLoaded", domready);
 
     /*<ltIE8>*/
-    // doScroll technique by Diego Perini http://javascript.nwbox.com/IEContentLoaded/
-    // testElement.doScroll() throws when the DOM is not ready, only in the top window
+
     var doScrollWorks = function () {
       try {
         testElement.doScroll();
@@ -13357,8 +12621,7 @@ provides: [DOMReady, DomReady]
       } catch (e) {}
       return false;
     };
-    // If doScroll works already, it can't be used to determine domready
-    //   e.g. in an iframe
+
     if (testElement.doScroll && !doScrollWorks()) {
       checks.push(doScrollWorks);
       shouldPoll = true;
@@ -13383,7 +12646,6 @@ provides: [DOMReady, DomReady]
       },
     };
 
-    // Make sure that domready fires before load
     Element.Events.load = {
       base: "load",
       onAdd: function (fn) {
@@ -13398,7 +12660,6 @@ provides: [DOMReady, DomReady]
       },
     };
 
-    // This is based on the custom load event
     window.addEvent("load", function () {
       loaded = true;
     });

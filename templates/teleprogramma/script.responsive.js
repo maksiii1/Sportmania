@@ -91,7 +91,6 @@ var responsiveDesign = {
         this.responsiveType = "phoneportrait";
         this.responsiveTypeIdx = 4;
       } else {
-        //if (this.lockedResponsiveType === 'desktop' || ($("#resp-desktop").is(":visible") && this.lockedResponsiveType === '')) {
         this.responsiveType = "desktop";
         this.responsiveTypeIdx = 0;
       }
@@ -131,15 +130,6 @@ var responsiveDesign = {
         '<div id="resp-tablet-landscape" /><div id="resp-tablet-portrait" /><div id="resp-phone-landscape" /><div id="resp-phone-portrait" />'
       ).appendTo("body");
 
-      /* (1) Use this code for debug instead of (2):
-       * var resizeTimeout;
-       * $(window).resize(function () {
-       * clearTimeout(resizeTimeout);
-       * resizeTimeout = setTimeout(function () { responsiveDesign.responsive(); }, 50);
-       * });
-       */
-
-      /* (2) Use this code for production and comment (1): */
       $(window).resize(function () {
         responsiveDesign.responsive();
       });
@@ -461,7 +451,6 @@ jQuery(function ($) {
 jQuery(window).bind(
   "responsiveNav",
   (function ($) {
-    /*global menuExtendedCreate */
     "use strict";
     return function (event, options) {
       if (options.responsiveDesign.isDesktop && $("li.ext").length > 0) {
@@ -517,10 +506,6 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
 
   responsiveLayoutCell(responsiveDesign);
 });
-
-/*global jQuery, responsiveDesign*/
-
-//setTimeout(function () { $("html").addClass("desktop") }, 0);
 
 if (!browser.ie || browser.version > 8) {
   jQuery(responsiveDesign.initialize);

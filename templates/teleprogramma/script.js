@@ -69,7 +69,6 @@ jQuery(function ($) {
   };
 
   var splitWithBrackets = function (str, token, brackets) {
-    /*jshint nonstandard:true */
     if (!token) {
       token = ",";
     }
@@ -479,9 +478,6 @@ jQuery(function ($) {
     return;
   }
 
-  /* Fix width of submenu items.
-   * The width of submenu item calculated incorrectly in IE6-7. IE6 has wider items, IE7 display items like stairs.
-   */
   $.each($("ul.hmenu ul"), function () {
     var maxSubitemWidth = 0;
     var submenu = $(this);
@@ -1107,7 +1103,6 @@ jQuery(function () {
       });
       element.css({
         "background-image": bg.join(", "),
-        //"background-size": sizes.join(", "),
         "background-repeat": "no-repeat",
       });
     };
@@ -1704,8 +1699,6 @@ window.resizeData.pageSliderPageWidth = false;
 (function ($) {
   "use strict";
 
-  /*global jQuery, artButtonSetup, browser */
-
   $(function () {
     artButtonSetup("btn-primary");
     artButtonSetup("btn");
@@ -1788,9 +1781,9 @@ window.resizeData.pageSliderPageWidth = false;
 
   if ($(window).width() <= 900) {
     if ($(".week_day .activeD").length) {
-      var pos = $(".week_day .activeD").position().left; //get left position of li
+      var pos = $(".week_day .activeD").position().left;
       var currentscroll = $(".week_day").scrollLeft();
-      var divwidth = $(".week_day").width(); //get div width
+      var divwidth = $(".week_day").width();
       pos = pos + currentscroll - divwidth / 2;
 
       $(".week_day").animate({ scrollLeft: pos }, 800);
